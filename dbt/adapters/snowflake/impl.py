@@ -196,7 +196,10 @@ class SnowflakeAdapter(SQLAdapter):
     def timestamp_add_sql(self, add_to: str, number: int = 1, interval: str = "hour") -> str:
         return f"DATEADD({interval}, {number}, {add_to})"
 
-    def submit_python_job(self, parsed_model: dict, compiled_code: str):
+    @available
+    def get_snowpark_sproc_sql(
+        self, parsed_model: dict, compiled_code: str, return_type: str = "STRING"
+    ) -> str:
         schema = parsed_model["schema"]
         database = parsed_model["database"]
         identifier = parsed_model["alias"]

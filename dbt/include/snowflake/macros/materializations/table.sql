@@ -67,7 +67,14 @@ def materialize(session, df, target_relation):
 
 def main(session):
     dbt = dbtObj(session.table)
-    df = model(dbt, session)
+    try:
+        df = model(dbt, session)
+    except Exception as e:
+        raise Exception(f"""While running {dbt.this}, encountered an error:
+{e}
+Logs: {dbt.logs}
+"""
+)
     materialize(session, df, dbt.this)
     return "OK"
 {% endmacro %}
