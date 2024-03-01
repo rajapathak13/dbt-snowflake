@@ -344,6 +344,8 @@ class SnowflakeConnectionManager(SQLConnectionManager):
 
             if creds.query_tag:
                 session_parameters.update({"QUERY_TAG": creds.query_tag})
+            print(creds)
+            print(creds.auth_args())
             handle = snowflake.connector.connect(
                 account=creds.account,
                 database=creds.database,
