@@ -344,10 +344,8 @@ class SnowflakeConnectionManager(SQLConnectionManager):
 
             if creds.query_tag:
                 session_parameters.update({"QUERY_TAG": creds.query_tag})
-
             handle = snowflake.connector.connect(
                 account=creds.account,
-                user=creds.user,
                 database=creds.database,
                 schema=creds.schema,
                 warehouse=creds.warehouse,
