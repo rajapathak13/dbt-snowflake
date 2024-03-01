@@ -344,8 +344,13 @@ class SnowflakeConnectionManager(SQLConnectionManager):
 
             if creds.query_tag:
                 session_parameters.update({"QUERY_TAG": creds.query_tag})
-            print(creds)
-            print(creds.auth_args())
+            print("here are the creds")
+            print(creds.account)
+            print(creds.database)
+            print(creds.schema)
+            print(creds.warehouse)
+            print(creds.role)
+            print(creds.token)
             handle = snowflake.connector.connect(
                 account=creds.account,
                 database=creds.database,
@@ -353,11 +358,12 @@ class SnowflakeConnectionManager(SQLConnectionManager):
                 warehouse=creds.warehouse,
                 role=creds.role,
                 autocommit=True,
-                client_session_keep_alive=creds.client_session_keep_alive,
+                # client_session_keep_alive=creds.client_session_keep_alive,
                 application="dbt",
-                insecure_mode=creds.insecure_mode,
-                session_parameters=session_parameters,
-                **creds.auth_args(),
+                # insecure_mode=creds.insecure_mode,
+                # session_parameters=session_parameters,
+                authenticator="oauth",
+                token=creds.token,
             )
 
             return handle
