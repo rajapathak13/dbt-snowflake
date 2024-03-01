@@ -357,13 +357,14 @@ class SnowflakeConnectionManager(SQLConnectionManager):
                 schema=creds.schema,
                 warehouse=creds.warehouse,
                 role=creds.role,
-                autocommit=True,
+                # autocommit=True,
                 # client_session_keep_alive=creds.client_session_keep_alive,
-                application="dbt",
+                # application="dbt",
                 # insecure_mode=creds.insecure_mode,
                 # session_parameters=session_parameters,
                 authenticator="oauth",
                 token=creds.token,
+                host=os.getenv("SNOWFLAKE_HOST"),
             )
             cur = handle.cursor()
             try:
