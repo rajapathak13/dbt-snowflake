@@ -366,13 +366,6 @@ class SnowflakeConnectionManager(SQLConnectionManager):
                 token=creds.token,
                 host=os.getenv("SNOWFLAKE_HOST"),
             )
-            cur = handle.cursor()
-            try:
-                cur.execute("SELECT * FROM tutorial_db.DATA_SCHEMA.results limit 10")
-                for i in cur:
-                    print(i)
-            finally:
-                cur.close()
 
             return handle
 
