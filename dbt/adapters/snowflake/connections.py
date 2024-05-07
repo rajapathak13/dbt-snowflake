@@ -65,6 +65,7 @@ ERROR_REDACTION_PATTERNS = {
 @dataclass
 class SnowflakeAdapterResponse(AdapterResponse):
     query_id: str = ""
+    session_id: str = ""
 
 
 @dataclass
@@ -415,6 +416,7 @@ class SnowflakeConnectionManager(SQLConnectionManager):
             rows_affected=cursor.rowcount,
             code=code,
             query_id=cursor.sfqid,
+            session_id=str(cursor.connection.session_id)
         )  # type: ignore
 
     # disable transactional logic by default on Snowflake
