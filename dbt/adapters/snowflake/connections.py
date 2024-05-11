@@ -312,6 +312,13 @@ class SnowflakeConnectionManager(SQLConnectionManager):
                         "Please double check your profile and try again."
                     ).format(msg)
                 )
+            elif msg == "access_token":
+                raise FailedToConnectError(
+                    (
+                        "{}\n\nThis error occurs when authentication has expired. "
+                        "Please reauth with your auth provider."
+                    ).format(msg)
+                )
             else:
                 raise DbtDatabaseError(msg)
         except Exception as e:
