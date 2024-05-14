@@ -146,8 +146,12 @@ class SnowflakeAdapter(SQLAdapter):
         relations = []
         quote_policy = {"database": True, "schema": True, "identifier": True}
 
-        columns = ["database_name", "schema_name", "name", "kind"]
-        for _database, _schema, _identifier, _type in results.select(columns):
+        for row in results:
+            _database, _schema, _identifier = row["database_name"], row["schema_name"], row["name"]
+            # In the Snowflake 2024_03 BCB:
+            # - 'show terse objects' stopped reporting 'DYNAMIC_TABLE' as a 'kind'
+            # - 'is_dynamic' was added as a column
+            _type = "DYNAMIC_TABLE" if row.get("is_dynamic") == "Y" else row["kind"]
             try:
                 _type = self.Relation.get_relation_type(_type.lower())
             except ValueError:
