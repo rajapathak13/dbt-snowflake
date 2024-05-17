@@ -54,6 +54,7 @@ class SnowflakeAdapter(SQLAdapter):
         {
             Capability.SchemaMetadataByRelations: CapabilitySupport(support=Support.Full),
             Capability.TableLastModifiedMetadata: CapabilitySupport(support=Support.Full),
+            Capability.ShowPythonModel: CapabilitySupport(support=Support.Full),
         }
     )
 
